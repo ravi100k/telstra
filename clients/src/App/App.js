@@ -25,59 +25,86 @@ class App extends Component {
       green: trafficStyle.black,
       next: "yellow",
       current: "red",
+      date: new Date().toLocaleString()
     }
+    this.interval = 0;
+
   }
 
   componentDidMount() {
-    this._timeout = setInterval(function () {
-      this.changeHandle();
-    }.bind(this), 3000);
+    this.intervalID = setInterval(this.changeTime, 1000);
+    /**
+     * For dynamically changing the the time interval.
+     */
+    this._timeout = setInterval(this.changeHandle, this.interval);
+
+    /**
+     * For constant time change of time interval.
+     */
+    // this._timeout = setInterval(function () {
+    //   this.changeHandle();
+    // }.bind(this), 3000);
   }
 
   componentWillUnmount() {
     clearInterval(this._timeout);
+    clearInterval(this.intervalID);
   }
 
-  handleTime = () => {
-    console.log(this.state.current)
-    if (this.state.current === 'red') {
-      return 3000;
-    }
-    else if (this.state.current === 'yellow') {
-      return 2000;
-    }
-    else if (this.state.current === 'green') {
-      return 1000;
-    }
-  }
+  changeTime = () => {
+    this.setState({
+      date: new Date().toLocaleString()
+    })
+  };
+
   changeHandle = () => {
+
+    // Clear the previous counter (dynamically changing the the time interval)
+    clearInterval(this._timeout); // stop the setInterval()
+
+    // Fetch the data from server for the current color.
+    this._apiCall();
+
+    // dynamically change the run interval
+    if (this.state.current === "green") { // interval betwwen red -> yellow
+      this.interval = 5000;
+    } else if (this.state.current === "red") { // interval betwwen yellow -> green
+      this.interval = 10000;
+    } else if (this.state.current === "yellow") { // interval betwwen green -> red
+      this.interval = 15000;
+    }
+
+    this._timeout = setInterval(this.changeHandle, this.interval) // start the setInterval()
+  };
+
+  _apiCall = () => {
     let styleObject = Object.assign({}, this.state);
 
     axios.get(`/traffic`)
-    .then(res => {
+      .then(res => {
 
-      styleObject.current = res.data.active;
+        styleObject.current = res.data.active;
 
-      if (res.data.active === "yellow") {
-        styleObject.red = trafficStyle.black;
-        styleObject.green = trafficStyle.black;
-        styleObject.yellow = trafficStyle.yellow;
-        styleObject.next = "green";
-      }
-      if (res.data.active === "green") {
-        styleObject.red = trafficStyle.black;
-        styleObject.green = trafficStyle.green;
-        styleObject.yellow = trafficStyle.black;
-        styleObject.next = "red";
-      }
-      if (res.data.active === "red") {
-        styleObject.red = trafficStyle.red;
-        styleObject.green = trafficStyle.black;
-        styleObject.yellow = trafficStyle.black;
-        styleObject.next = "yellow";
-      }
+        if (res.data.active === "yellow") {
+          styleObject.red = trafficStyle.black;
+          styleObject.green = trafficStyle.black;
+          styleObject.yellow = trafficStyle.yellow;
+          styleObject.next = "green";
+        }
+        if (res.data.active === "green") {
+          styleObject.red = trafficStyle.black;
+          styleObject.green = trafficStyle.green;
+          styleObject.yellow = trafficStyle.black;
+          styleObject.next = "red";
+        }
+        if (res.data.active === "red") {
+          styleObject.red = trafficStyle.red;
+          styleObject.green = trafficStyle.black;
+          styleObject.yellow = trafficStyle.black;
+          styleObject.next = "yellow";
+        }
 
-    })
+      })
       .then(() => {
         this.setState({
           ...styleObject
@@ -86,14 +113,15 @@ class App extends Component {
   }
 
   render() {
+
     return (
       <div className="App" >
         <h2>Traffic Light Indicator</h2>
-
+        <span>Todays Date - {this.state.date}</span>
         <div className="box">
-          <div className="circle" style={this.state.red}></div>
-          <div className="circle" style={this.state.yellow}></div>
-          <div className="circle" style={this.state.green}></div>
+          <div className="circle" style={this.state.red}>Red</div>
+          <div className="circle" style={this.state.yellow}>Yellow</div>
+          <div className="circle" style={this.state.green}>Green</div>
         </div>
       </div>
     );
