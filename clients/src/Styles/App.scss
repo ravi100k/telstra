@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+  .box {
+    padding-top: 0px;
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .circle {
+    margin-top: 25%;
+    border: 3px solid #8ddfc0;
+    width: 100px;
+    height: 100px;
+    float: left;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+    margin-left: 5px;
+  }
+}
