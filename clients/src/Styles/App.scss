@@ -2,21 +2,27 @@
   text-align: center;
   .box {
     padding-top: 0px;
-    width: 350px;
+    width: 500px;
     margin-left: auto;
     margin-right: auto;
   }
 
   .circle {
-    margin-top: 25%;
+    margin-top: 15%;
     border: 3px solid #8ddfc0;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     float: left;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
     border-radius: 100px;
     margin-left: 5px;
-    color: #fff
+    color: #fff;
+
+    .title {
+      display: flex;
+      margin-top: 50px;
+      justify-content: center;
+    }
   }
 }

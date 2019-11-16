@@ -5,13 +5,13 @@ export default (function signal(props) {
   return (
     <div className="box">
       <div className="circle" style={color.red}>
-        Red
+        <span className="title">Red (5 sec)</span>
       </div>
       <div className="circle" style={color.yellow}>
-        Yellow
+        <span className="title">Yellow (10 sec)</span>
       </div>
       <div className="circle" style={color.green}>
-        Green
+        <span className="title">Green (15 sec)</span>
       </div>
     </div>
   );

@@ -33,23 +33,13 @@ class App extends Component {
 
   componentDidMount() {
     this.intervalID = setInterval(this.changeTime, 1000);
-    /**
-     * For dynamically changing the the time interval.
-     */
-    this._timeout = setInterval(this.changeHandle, this.interval);
-
-    /**
-     * For constant time change of time interval.
-     */
-    // this._timeout = setInterval(function () {
-    //   this.changeHandle();
-    // }.bind(this), 3000);
-  }
+    this._timeout = setInterval(this.changeHandle, 1000);
+  };
 
   componentWillUnmount() {
     clearInterval(this._timeout);
     clearInterval(this.intervalID);
-  }
+  };
 
   changeTime = () => {
     this.setState({
@@ -57,29 +47,8 @@ class App extends Component {
     });
   };
 
-  changeHandle = () => {
-    // Clear the previous counter (dynamically changing the the time interval)
-    clearInterval(this._timeout); // stop the setInterval()
-
+  changeHandle = async () => {
     // Fetch the data from server for the current color.
-    this._apiCall();
-
-    // dynamically change the run interval
-    if (this.state.current === "green") {
-      // interval betwwen red -> yellow
-      this.interval = 5000;
-    } else if (this.state.current === "red") {
-      // interval betwwen yellow -> green
-      this.interval = 10000;
-    } else if (this.state.current === "yellow") {
-      // interval betwwen green -> red
-      this.interval = 15000;
-    }
-
-    this._timeout = setInterval(this.changeHandle, this.interval); // start the setInterval()
-  };
-
-  _apiCall = async () => {
     let styleObject = Object.assign({}, this.state);
 
     let res = await signalResponse.call();

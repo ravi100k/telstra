@@ -4,9 +4,11 @@
   "description": "traffic light timer app",
   "main": "index.js",
   "scripts": {
-    "server": "cd server && npm run start",
-    "client": "cd clients && npm run build",
     "start": "npm run client && npm run server",
+    "server": "cd server && npm run start",
+    "server:dev": "cd server && npm run start:dev",
+    "client": "cd clients && npm run build",
+    "client:dev": "cd clients && npm run start",
     "test:client": "cd clients && npm run test",
     "test:server": "cd server && npm run test",
     "test": "npm run test:server && npm run test:client"
@@ -19,8 +21,6 @@
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-15": "^1.4.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
@@ -32,13 +32,13 @@
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
     "react-test-renderer": "^16.11.0",
-    "response-time": "^2.3.2",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "response-time": "^2.3.2"
   },
   "devDependencies": {
-    "nodemon": "^1.19.4",
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "nodemon": "^1.19.4"
   },
   "author": "ravi kumar",
   "license": "MIT"
