@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import signalResponse from "../services/fetchData";
-import Signal from "./components/Signal";
+import Signal from "./components/signal";
 import Loading from "./components/Loading";
 
 const trafficStyle = {

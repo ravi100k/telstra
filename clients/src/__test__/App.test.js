@@ -2,7 +2,7 @@ import React from 'react';
 import App from '../App/App';
 import ReactDOM from 'react-dom';
 import { create } from "react-test-renderer";
-import Signal from '../App/components/Signal';
+import Signal from '../App/components/signal';
 import Loading from '../App/components/Loading';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
