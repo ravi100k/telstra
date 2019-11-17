@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import signalResponse from "../services/fetchData";
-import Signal from "./components/signal";
+import Signal from "./components/Signal";
+import Loading from "./components/Loading";
 
 const trafficStyle = {
   red: {
@@ -21,25 +22,25 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      red: trafficStyle.red,
+      red: trafficStyle.black,
       yellow: trafficStyle.black,
       green: trafficStyle.black,
       next: "yellow",
       current: "red",
-      date: new Date().toLocaleString()
+      date: new Date().toLocaleString(),
+      loading: true
     };
-    this.interval = 0;
   }
 
   componentDidMount() {
     this.intervalID = setInterval(this.changeTime, 1000);
     this._timeout = setInterval(this.changeHandle, 1000);
-  };
+  }
 
   componentWillUnmount() {
     clearInterval(this._timeout);
     clearInterval(this.intervalID);
-  };
+  }
 
   changeTime = () => {
     this.setState({
@@ -53,6 +54,7 @@ class App extends Component {
 
     let res = await signalResponse.call();
     if (res.data) {
+      styleObject.loading = false;
       styleObject.current = res.data.active;
 
       if (res.data.active === "yellow") {
@@ -81,13 +83,14 @@ class App extends Component {
   };
 
   render() {
+    const { loading } = this.state;
     return (
       <div className="App">
         <h2>Traffic Light Indicator</h2>
         <span>
           Todays Date - {this.state.date}
         </span>
-        <Signal color={this.state} />
+        {loading ? <Loading /> : <Signal color={this.state} />}
       </div>
     );
   }

@@ -9,7 +9,6 @@ router.get('/', (req, res, next) => {
 
 /* GET home page. */
 router.get('/traffic', (req, res, next) => {
-  console.log('Output ->',color)
   res.json(color)
 });
 

@@ -2,7 +2,8 @@ import React from 'react';
 import App from '../App/App';
 import ReactDOM from 'react-dom';
 import { create } from "react-test-renderer";
-import Signal from '../App/components/signal';
+import Signal from '../App/components/Signal';
+import Loading from '../App/components/Loading';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -16,6 +17,7 @@ describe("My Components test case", () => {
     green: 'black',
     next: "yellow",
     current: "red",
+    loading: true
   };
 
   it('renders without crashing', () => {
@@ -24,11 +26,17 @@ describe("My Components test case", () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it('render Signal componets and date and title', () => {
+  it('render Signal || Loading Component && date && title', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find('h2')).toHaveLength(1);
     expect(wrapper.find('span')).toHaveLength(1);
-    expect(wrapper.find(Signal)).toHaveLength(1);
+    expect(wrapper.setState(propsToSignal))
+    if (propsToSignal.loading) {
+      expect(wrapper.find(Loading)).toHaveLength(1);
+    } else {
+      expect(wrapper.find(Signal)).toHaveLength(1);
+    }
+    console.log(propsToSignal);
   });
 
   it('render 3 traffic signals', () => {

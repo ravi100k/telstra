@@ -1,6 +1,6 @@
 import React from "react";
 
-export default (function signal(props) {
+export default (function Signal(props) {
   const color = props.color;
   return (
     <div className="box">
